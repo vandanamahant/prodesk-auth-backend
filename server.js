@@ -30,6 +30,7 @@ app.get('/', (req, res) => {
 });
 
 const User = require('./models/User');
+const auth = require('./middleware/auth');
 
 const generateToken = (userId) => {
     return jwt.sign({ id: userId }, JWT_SECRET, { expiresIn: '7d' });
@@ -84,6 +85,15 @@ app.post('/api/auth/login', async (req, res) => {
                 email: user.email
             }
         });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/auth/me', auth, async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
