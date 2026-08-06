@@ -15,7 +15,8 @@ export default function Register() {
     e.preventDefault();
     setError('');
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', formData);
+      const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+      const res = await axios.post(`${API_URL}/auth/register`, formData);
       localStorage.setItem('token', res.data.token);
       navigate('/login');
     } catch (err) {
