@@ -4,30 +4,28 @@ import { useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
   const [user, setUser] = useState(null);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem('token');
+      
       if (!token) {
-        navigate('/login');
+        navigate('/login', { replace: true });
         return;
       }
 
       try {
-        const res = await API.get('/auth/me', {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await API.get('/auth/me'); 
         setUser(res.data);
       } catch (err) {
         localStorage.removeItem('token');
-        navigate('/login');
+        navigate('/login', { replace: true });
       }
     };
 
     fetchUserData();
-  }, [navigate]);
+  }, []); // <-- Yahan dependency array khali [] honi chahiye taki yeh sirf ek baar load ho!
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -38,7 +36,6 @@ export default function Dashboard() {
     <div className="auth-container">
       <div className="auth-form dashboard-card">
         <h2>Dashboard</h2>
-        {error && <p className="error-msg">{error}</p>}
         {user ? (
           <div className="user-info">
             <p className="welcome-text">Welcome, <span>{user.name}</span>!</p>
