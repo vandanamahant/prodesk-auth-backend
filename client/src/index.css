@@ -8,6 +8,7 @@
 body {
   background-color: #f4f6f9;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 .auth-container {
@@ -126,6 +127,7 @@ body {
 .email-text {
   font-size: 14px;
   color: #666;
+  word-break: break-word;
 }
 
 .loading-text {
@@ -159,12 +161,24 @@ body {
 
   .auth-form, .dashboard-card {
     padding: 20px 16px;
-    box-shadow: none; 
+    box-shadow: 100%; 
     background: transparent;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
   
+  .auth-form h2 {
+    font-size: 22px; 
+  }
+
   .auth-form {
     background: #ffffff;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
   }
 }
+
+.auth-form input, 
+  .auth-form button, 
+  .logout-btn {
+    padding: 14px; 
+    font-size: 16px; 
+  }
