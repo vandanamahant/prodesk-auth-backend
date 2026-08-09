@@ -59,6 +59,19 @@ export default function Dashboard() {
     }
   };
 
+  const handleStripeCheckout = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const res = await API.post('/create-checkout-session', {}, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      window.location.href = res.data.url; 
+    } catch (err) {
+      console.error("Stripe error:", err);
+      alert("Payment initiation failed!");
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem('token');
     navigate('/login');
@@ -78,7 +91,7 @@ export default function Dashboard() {
           <p className="loading-text">Loading...</p>
         )}
 
-        <form onSubmit={handleCreate} className="item-form" style={{ marginTop: '20px' }}>
+        <form onSubmit={handleCreate} className="item-form">
           <input
             type="text"
             placeholder="Title"
@@ -95,17 +108,21 @@ export default function Dashboard() {
           <button type="submit">Add Item</button>
         </form>
 
-        <div className="item-list" style={{ marginTop: '20px', textAlign: 'left' }}>
+        <div className="item-list">
           {items.map((item) => (
-            <div key={item._id} className="item-card" style={{ border: '1px solid #ddd', padding: '10px', marginBottom: '10px', borderRadius: '4px' }}>
+            <div key={item._id} className="item-card">
               <h3>{item.title}</h3>
               <p>{item.description}</p>
-              <button onClick={() => handleDelete(item._id)} style={{ background: '#ff4d4d', color: '#fff', border: 'none', padding: '5px 10px', cursor: 'pointer' }}>Delete</button>
+              <button className="delete-btn" onClick={() => handleDelete(item._id)}>Delete</button>
             </div>
           ))}
         </div>
 
-        <button className="logout-btn" onClick={handleLogout} style={{ marginTop: '20px' }}>Logout</button>
+        <button className="stripe-btn" onClick={handleStripeCheckout}>
+          Pay with Stripe (Test Mode)
+        </button>
+
+        <button className="logout-btn" onClick={handleLogout}>Logout</button>
       </div>
     </div>
   );

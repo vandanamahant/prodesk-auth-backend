@@ -136,6 +136,79 @@ body {
   font-size: 14px;
 }
 
+/* 👇 Naye Items aur Dashboard ke liye added classes */
+.item-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.item-list {
+  margin-top: 15px;
+  text-align: left;
+  max-height: 200px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.item-card {
+  border: 1px solid #e1e4e8;
+  padding: 12px;
+  border-radius: 6px;
+  background-color: #fafbfc;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.item-card h3 {
+  font-size: 16px;
+  color: #333;
+}
+
+.item-card p {
+  font-size: 13px;
+  color: #666;
+}
+
+.delete-btn {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 500;
+  align-self: flex-start;
+  transition: background-color 0.2s ease;
+}
+
+.delete-btn:hover {
+  background-color: #c82333;
+}
+
+.stripe-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #635bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 15px;
+  transition: background-color 0.2s ease;
+}
+
+.stripe-btn:hover {
+  background-color: #5247db;
+}
+
 .logout-btn {
   width: 100%;
   padding: 12px;
@@ -146,6 +219,7 @@ body {
   font-size: 16px;
   cursor: pointer;
   font-weight: 600;
+  margin-top: 15px;
   transition: background-color 0.2s ease;
 }
 
@@ -161,7 +235,6 @@ body {
 
   .auth-form, .dashboard-card {
     padding: 20px 16px;
-    box-shadow: 100%; 
     background: transparent;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   }
@@ -177,8 +250,9 @@ body {
 }
 
 .auth-form input, 
-  .auth-form button, 
-  .logout-btn {
-    padding: 14px; 
-    font-size: 16px; 
-  }
+.auth-form button, 
+.logout-btn,
+.stripe-btn {
+  padding: 14px; 
+  font-size: 16px; 
+}
