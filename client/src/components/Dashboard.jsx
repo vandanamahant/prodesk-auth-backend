@@ -47,12 +47,16 @@ export default function Dashboard() {
     if (!title.trim()) return;
 
     try {
-      const res = await API.post('/items', { title, description });
-      setItems([...items, res.data]);
+      const res = await API.post('/ai/items', { title, description });
+      
+      setItems([...items, res.data.item]);
       setTitle('');
       setDescription('');
+      
+      console.log("AI Insights:", res.data.aiInsights);
     } catch (err) {
-      console.error(err);
+      console.error("Error creating AI item:", err);
+      alert("Failed to create item with AI!");
     }
   };
 

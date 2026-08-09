@@ -3,11 +3,31 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const morgan = require('morgan');
 const Item = require('./models/Item');
+const { GoogleGenAI } = require('@google/genai');
 
 dotenv.config();
 
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
 const app = express();
+
+app.use(helmet()); 
+app.use(morgan('combined')); 
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, 
+    max: 100,
+    standardHeaders: true,
+    legacyHeaders: false,
+    message: "Too many requests from this IP, please try again after 15 minutes."
+});
+
+app.use('/api/', limiter);
+
 app.use(express.json());
 
 const allowedOrigins = [
@@ -178,6 +198,44 @@ app.delete('/api/items/:id', auth, async (req, res) => {
 
         await Item.findByIdAndDelete(req.params.id);
         res.json({ message: "Item successfully deleted!" });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.post('/api/ai/items', auth, async (req, res) => {
+    try {
+        const { title, description } = req.body;
+
+        const prompt = `Analyze this task title: "${title}" and description: "${description}". Provide a short 1-sentence summary and suggest a single category tag (e.g., Work, Study, Personal, Urgent). Format your response strictly as JSON with keys: "summary" and "tag".`;
+
+        const response = await ai.models.generateContent({
+            model: 'gemini-2.5-flash',
+            contents: prompt,
+        });
+
+        let aiData;
+        try {
+            const cleanedText = response.text.replace(/```json/g, '').replace(/```/g, '').trim();
+            aiData = JSON.parse(cleanedText);
+        } catch (parseError) {
+            aiData = { summary: description, tag: "General" };
+        }
+
+        const newItem = new Item({
+            title,
+            description: aiData.summary || description,
+            tag: aiData.tag || "General",
+            authorId: req.user.id
+        });
+
+        const savedItem = await newItem.save();
+        res.status(201).json({
+            message: "Item created and enriched with AI successfully!",
+            item: savedItem,
+            aiInsights: aiData
+        });
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
