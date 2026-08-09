@@ -136,7 +136,6 @@ body {
   font-size: 14px;
 }
 
-/* 👇 Naye Items aur Dashboard ke liye added classes */
 .item-form {
   display: flex;
   flex-direction: column;
@@ -255,4 +254,74 @@ body {
 .stripe-btn {
   padding: 14px; 
   font-size: 16px; 
+}
+
+.edit-form-inline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.save-btn {
+  background-color: #28a745;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  width: 100%;
+}
+
+.save-btn:hover {
+  background-color: #218838;
+}
+
+.cancel-btn {
+  background-color: #6c757d;
+  color: #fff;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  width: 100%;
+}
+
+.cancel-btn:hover {
+  background-color: #5a6268;
+}
+
+.edit-btn {
+  background-color: #ffc107;
+  color: #000;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  flex: 1;
+}
+
+.edit-btn:hover {
+  background-color: #e0a800;
+}
+
+.item-card .delete-btn {
+  flex: 1;
+  align-self: auto;
+}
+
+.chart-container {
+  margin: 15px 0;
+  padding: 10px;
+  background: #fff;
+  border-radius: 6px;
+  border: 1px solid #e1e4e8;
 }

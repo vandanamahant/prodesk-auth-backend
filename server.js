@@ -147,11 +147,11 @@ app.put('/api/items/:id', auth, async (req, res) => {
     try {
         const item = await Item.findById(req.params.id);
         if (!item) {
-            return res.status(404).json({ error: "Item nahi mila!" });
+            return res.status(404).json({ error: "Item not found!" });
         }
 
         if (item.authorId.toString() !== req.user.id) {
-            return res.status(403).json({ error: "Aapko ise update karne ki permission nahi hai!" });
+            return res.status(403).json({ error: "You do not have permission to update this item!" });
         }
 
         const updatedItem = await Item.findByIdAndUpdate(
@@ -169,15 +169,15 @@ app.delete('/api/items/:id', auth, async (req, res) => {
     try {
         const item = await Item.findById(req.params.id);
         if (!item) {
-            return res.status(404).json({ error: "Item nahi mila!" });
+            return res.status(404).json({ error: "Item not found!" });
         }
 
         if (item.authorId.toString() !== req.user.id) {
-            return res.status(403).json({ error: "Aapko ise delete karne ki permission nahi hai!" });
+            return res.status(403).json({ error: "You do not have permission to delete this item!" });
         }
 
         await Item.findByIdAndDelete(req.params.id);
-        res.json({ message: "Item successfully delete ho gaya!" });
+        res.json({ message: "Item successfully deleted!" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
