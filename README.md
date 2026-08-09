@@ -14,6 +14,7 @@ A robust full-stack web application featuring secure user authentication using N
 - **Optimistic UI:** Instant UI updates during item deletion for a seamless user experience.
 - **Stripe Payment Gateway:** Integrated test mode checkout capability for secure simulated transactions.
 - **Responsive UI:** Clean, modern frontend built with React and React Router.
+- **Data Visualization Dashboard:** Integrated Chart.js analytics engine to display item metrics dynamically on the dashboard.
 
 ---
 
@@ -23,6 +24,7 @@ A robust full-stack web application featuring secure user authentication using N
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB, Mongoose
 - **Payments:** Stripe API (Test Mode)
+- **Visualization:** Chart.js, react-chartjs-2
 - **Security:** bcryptjs, JSON Web Tokens (JWT), CORS
 
 ---
