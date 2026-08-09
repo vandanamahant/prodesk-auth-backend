@@ -15,6 +15,10 @@ A robust full-stack web application featuring secure user authentication using N
 - **Stripe Payment Gateway:** Integrated test mode checkout capability for secure simulated transactions.
 - **Responsive UI:** Clean, modern frontend built with React and React Router.
 - **Data Visualization Dashboard:** Integrated Chart.js analytics engine to display item metrics dynamically on the dashboard.
+- **Server Hardening:** Protected REST API from brute-force attacks using `Helmet.js` and `express-rate-limit`.
+- **Production Logging:** Implemented `Morgan` for structured and persistent server access logs.
+- **Server-Side AI Middleware:** Secure backend integration with Google Gemini AI to prevent API key exposure on the client side.
+- **Automated Data Enrichment:** Automatically summarizes, tags, and categorizes data payloads via LLM before saving them to MongoDB.
 
 ---
 
@@ -26,6 +30,8 @@ A robust full-stack web application featuring secure user authentication using N
 - **Payments:** Stripe API (Test Mode)
 - **Visualization:** Chart.js, react-chartjs-2
 - **Security:** bcryptjs, JSON Web Tokens (JWT), CORS
+- **Security & Logging:** Helmet.js, express-rate-limit, Morgan
+- **AI Integration:** Google Gemini API (Server-Side Proxy)
 
 ---
 
