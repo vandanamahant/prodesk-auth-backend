@@ -10,6 +10,9 @@ A robust full-stack web application featuring secure user authentication using N
 - **Cryptographic Security:** Passwords are securely hashed using `bcryptjs` before being stored in MongoDB.
 - **JWT Authentication:** Secure token-based session management.
 - **Protected Routes:** Backend middleware validation and frontend route protection ensuring only authenticated users can access the dashboard.
+- **Item Management (CRUD):** Authenticated users can create, view, and delete their custom items securely with data ownership validation.
+- **Optimistic UI:** Instant UI updates during item deletion for a seamless user experience.
+- **Stripe Payment Gateway:** Integrated test mode checkout capability for secure simulated transactions.
 - **Responsive UI:** Clean, modern frontend built with React and React Router.
 
 ---
@@ -19,6 +22,7 @@ A robust full-stack web application featuring secure user authentication using N
 - **Frontend:** React, React Router, Axios, CSS
 - **Backend:** Node.js, Express.js
 - **Database:** MongoDB, Mongoose
+- **Payments:** Stripe API (Test Mode)
 - **Security:** bcryptjs, JSON Web Tokens (JWT), CORS
 
 ---
