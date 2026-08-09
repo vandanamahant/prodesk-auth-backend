@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const Item = require('./models/Item');
 
 dotenv.config();
 
@@ -113,6 +114,70 @@ app.get('/api/auth/me', auth, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
         res.json(user);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.post('/api/items', auth, async (req, res) => {
+    try {
+        const { title, description } = req.body;
+        const newItem = new Item({
+            title,
+            description,
+            authorId: req.user.id
+        });
+        const savedItem = await newItem.save();
+        res.status(201).json(savedItem);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.get('/api/items', auth, async (req, res) => {
+    try {
+        const items = await Item.find({ authorId: req.user.id });
+        res.json(items);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.put('/api/items/:id', auth, async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.id);
+        if (!item) {
+            return res.status(404).json({ error: "Item nahi mila!" });
+        }
+
+        if (item.authorId.toString() !== req.user.id) {
+            return res.status(403).json({ error: "Aapko ise update karne ki permission nahi hai!" });
+        }
+
+        const updatedItem = await Item.findByIdAndUpdate(
+            req.params.id,
+            req.body,
+            { new: true }
+        );
+        res.json(updatedItem);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+app.delete('/api/items/:id', auth, async (req, res) => {
+    try {
+        const item = await Item.findById(req.params.id);
+        if (!item) {
+            return res.status(404).json({ error: "Item nahi mila!" });
+        }
+
+        if (item.authorId.toString() !== req.user.id) {
+            return res.status(403).json({ error: "Aapko ise delete karne ki permission nahi hai!" });
+        }
+
+        await Item.findByIdAndDelete(req.params.id);
+        res.json({ message: "Item successfully delete ho gaya!" });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
